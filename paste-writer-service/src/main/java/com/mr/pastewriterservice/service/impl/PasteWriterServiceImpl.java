@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mr.pastewriterservice.model.Paste;
+import com.mr.pastewriterservice.proxy.UrlGeneratorServiceProxy;
 import com.mr.pastewriterservice.repository.PasteRepository;
 import com.mr.pastewriterservice.service.PasteWriterService;
 
@@ -22,11 +23,15 @@ public class PasteWriterServiceImpl implements PasteWriterService{
 	
 	@Autowired
 	private PasteRepository pasteRepository;
+	
+	@Autowired
+	private UrlGeneratorServiceProxy urlGeneratorServiceProxy;
 
 	@Override
 	public String writePaste(Paste paste) {
 		// mocked
-		String tinyUrl = "jhsd772";
+		//String tinyUrl = "jhsd772";
+		String tinyUrl = urlGeneratorServiceProxy.generateUrl();
 		logger.info("TinyURL recieved: " + tinyUrl);
 		paste.setUrl(tinyUrl);
 		
