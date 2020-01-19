@@ -8,13 +8,12 @@ import com.mr.urlgeneratorservice.exception.UrlGeneratorServiceException;
 import com.mr.urlgeneratorservice.service.UrlGeneratorService;
 
 /**
- * An implementation of {@link UrlGeneratorService}. This implementation uses
- * Zookeeper to generate URLs.
+ * An implementation of {@link UrlGeneratorService}.
  * @author manish
  *
  */
 @Service
-public class ZkprUrlGeneratorService implements UrlGeneratorService{
+public class UrlGeneratorServiceImpl implements UrlGeneratorService{
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
@@ -44,7 +43,7 @@ public class ZkprUrlGeneratorService implements UrlGeneratorService{
 	 * @param num
 	 * @return
 	 */
-	private String base62(long num) {
+	public String base62(long num) {
 		StringBuilder result = new StringBuilder();
 		
 		int rem = (int) (num % BASE);
@@ -61,19 +60,5 @@ public class ZkprUrlGeneratorService implements UrlGeneratorService{
 		}
 		return result.toString();
 	}
-	
-//	public static void main(String[] args) {
-//		ZkprUrlGeneratorService service = new ZkprUrlGeneratorService();
-//		System.out.println(service.base62(62));
-//		System.out.println(service.base62(63));
-//		System.out.println(service.base62(64));
-//		System.out.println(service.base62(72));
-//		System.out.println(service.base62(73));
-//		
-//		System.out.println(service.base62(1000000000000L));
-//		System.out.println(service.base62(3500000000000L));
-//		System.out.println(service.base62(10000));
-//		System.out.println(service.base62(225444));
-//	}
 
 }
