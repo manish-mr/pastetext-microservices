@@ -12,6 +12,15 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 @DynamoDBTable(tableName = "pastes")
 public class Paste {
 	
+	public Paste() {
+		
+	}
+	
+	public Paste(String url, String content) {
+		this.url = url;
+		this.content = content;
+	}
+	
 	@DynamoDBHashKey
 	private String url;
 	

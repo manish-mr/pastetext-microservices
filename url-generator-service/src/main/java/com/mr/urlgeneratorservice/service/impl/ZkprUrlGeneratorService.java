@@ -19,7 +19,7 @@ public class ZkprUrlGeneratorService implements UrlGeneratorService{
 	
 	public static final int URL_SIZE = 7;
 	
-	private int counter = 1000;
+	private int counter = 100000;
 	
 	@Override
 	public String generateTinyUrl() {

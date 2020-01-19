@@ -11,6 +11,8 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 
+import redis.clients.jedis.Jedis;
+
 @Configuration
 public class AwsConfig {
 	
@@ -26,6 +28,9 @@ public class AwsConfig {
 	@Value("${amazon.dynamodb.endpoint}")
 	private String dynamoDbEndPoint;
 	
+	@Value("${redis.server}")
+	private String redisServer;
+	
 	@Bean
 	public DynamoDBMapper mapper() {
 		return new DynamoDBMapper(amazonDynamoDBConfig());
@@ -36,6 +41,11 @@ public class AwsConfig {
 				.withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(dynamoDbEndPoint, region))
 				.withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey)))
 				.build();
+	}
+	
+	@Bean
+	public Jedis getJedis() {
+		return new Jedis(redisServer);
 	}
 	
 }
