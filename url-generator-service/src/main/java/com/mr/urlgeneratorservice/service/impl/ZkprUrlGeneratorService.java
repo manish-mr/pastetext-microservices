@@ -1,7 +1,10 @@
 package com.mr.urlgeneratorservice.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.mr.urlgeneratorservice.exception.UrlGeneratorServiceException;
 import com.mr.urlgeneratorservice.service.UrlGeneratorService;
 
 /**
@@ -13,6 +16,8 @@ import com.mr.urlgeneratorservice.service.UrlGeneratorService;
 @Service
 public class ZkprUrlGeneratorService implements UrlGeneratorService{
 	
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	public static final String ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 	public static final int BASE = ALPHABET.length();
@@ -23,8 +28,14 @@ public class ZkprUrlGeneratorService implements UrlGeneratorService{
 	
 	@Override
 	public String generateTinyUrl() {
-		String tinyUrl = base62(counter);
-		counter ++;
+		String tinyUrl = null;
+		try {
+			tinyUrl = base62(counter);
+			counter ++;
+		} catch(Exception e) {
+			logger.error(e.getMessage());
+			throw new UrlGeneratorServiceException(e);
+		}
 		return tinyUrl;
 	}
 	

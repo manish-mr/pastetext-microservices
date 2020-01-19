@@ -27,7 +27,6 @@ public class RedisCacheService implements CacheService{
 
 	@Override
 	public void set(Paste paste) {
-		// TODO Auto-generated method stub
 		jedis.set(paste.getUrl(), paste.getContent());
 		
 	}

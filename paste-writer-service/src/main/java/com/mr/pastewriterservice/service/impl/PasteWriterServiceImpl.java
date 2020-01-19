@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mr.pastewriterservice.exception.PasteWriterServiceException;
 import com.mr.pastewriterservice.model.Paste;
 import com.mr.pastewriterservice.proxy.UrlGeneratorServiceProxy;
 import com.mr.pastewriterservice.repository.PasteRepository;
@@ -29,16 +30,20 @@ public class PasteWriterServiceImpl implements PasteWriterService{
 
 	@Override
 	public String writePaste(Paste paste) {
-		// mocked
-		//String tinyUrl = "jhsd772";
-		String tinyUrl = urlGeneratorServiceProxy.generateUrl();
-		logger.info("TinyURL recieved: " + tinyUrl);
-		paste.setUrl(tinyUrl);
-		
-		// Store in database
-		pasteRepository.insert(paste);
-		logger.info("Paste stored in database");
-		
+		String tinyUrl = null;
+		try {
+			// Generate a new tinyUrl
+			tinyUrl = urlGeneratorServiceProxy.generateUrl();
+			logger.info("Recieved new tiny URL: " + tinyUrl);
+			paste.setUrl(tinyUrl);
+			
+			// Store in database
+			pasteRepository.insert(paste);
+			logger.info("Paste stored in database with URL: " + tinyUrl);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw new PasteWriterServiceException(e);
+		}
 		return tinyUrl;
 	}
 

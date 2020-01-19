@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mr.urlgeneratorservice.exception.UrlGeneratorServiceException;
 import com.mr.urlgeneratorservice.service.UrlGeneratorService;
 
 /**
@@ -23,9 +24,15 @@ public class UrlGeneratorController {
 	
 	@GetMapping(path = "/generateUrl")
 	public String generateTinyUrl() {
-		logger.info("Request recieved");
-		String tinyUrl = urlGeneratorService.generateTinyUrl();
-		return tinyUrl;
+		try {
+			logger.info("Request recieved");
+			String tinyUrl = urlGeneratorService.generateTinyUrl();
+			return tinyUrl;
+		} catch (UrlGeneratorServiceException e) {
+			logger.error(e.getMessage());
+			throw e;
+		}
+		
 	}
 
 }

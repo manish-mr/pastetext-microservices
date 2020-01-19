@@ -7,5 +7,5 @@ package com.mr.urlgeneratorservice.service;
  */
 public interface UrlGeneratorService {
 	
-	String generateTinyUrl();
+	public String generateTinyUrl();
 }
